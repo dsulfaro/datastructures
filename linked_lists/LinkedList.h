@@ -35,6 +35,9 @@ class LinkedList{
     // adds a number to the end of the list
     bool push(int value);
 
+    // pops the item off end of the list
+    bool pop();
+
     // prints contents of list
     void print();
 
