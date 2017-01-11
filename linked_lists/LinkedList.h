@@ -38,6 +38,12 @@ class LinkedList{
     // pops the item off end of the list
     bool pop();
 
+    // inserts a value at the given position
+    // indexing starts at 0 meaning pushing
+    // to the length position of the list
+    // counts as the end of the list
+    bool insert(int value, int position);
+
     // prints contents of list
     void print();
 

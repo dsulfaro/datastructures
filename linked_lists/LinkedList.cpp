@@ -47,7 +47,42 @@ bool LinkedList::pop() {
       return true;
     }
   }
+  std::cout << "Couldn't pop" << std::endl;
   return false;
+}
+
+bool LinkedList::insert(int value, int position) {
+  if (position < 0 || position > length + 1) {
+    std::cout << "Invalid position" << std::endl;
+  }
+  else {
+    if (position == length) {
+      this->push(value);
+    }
+    else if (position == 0) {
+      Node * n = new Node;
+      n->data = value;
+      Node * temp = head;
+      head = n;
+      head->next = temp;
+      return true;
+    }
+    else {
+      Node * p = head;
+      Node * q = head->next;
+      while (position > 1) {
+        p = p->next;
+        q = q->next;
+        position--;
+      }
+      Node * n = new Node;
+      n->data = value;
+      n->next = q;
+      p->next = n;
+      return true;
+    }
+  }
+  return true;
 }
 
 void LinkedList::print() {

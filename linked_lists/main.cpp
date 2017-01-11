@@ -5,18 +5,11 @@ int main() {
 
   LinkedList list;
   list.push(1);
-  list.print();
-  list.pop();
-  list.print();
-
-  list.push(1);
   list.push(2);
+  list.push(3);
+
+  list.insert(0, 0);
   list.print();
-  list.pop();
-  list.print();
-  list.pop();
-  list.print();
-  list.pop();
 
   return 0;
 
