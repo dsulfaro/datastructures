@@ -49,6 +49,7 @@ class LinkedList(object):
                     curr = curr.next
                 n = Node(val, curr)
                 prev.next = n
+            self.length += 1
         return
 
 
@@ -68,8 +69,30 @@ class LinkedList(object):
         self.length -= 1
         return
 
+    def delete(self, pos):
+        if self.empty():
+            print "List is empty"
+        if pos >= self.length or pos < 0:
+            print "Invalid pos"
+        else:
+            if pos == 0:
+                self.head = self.head.next
+            elif pos == self.length - 1:
+                self.pop()
+            else:
+                prev = self.head
+                curr = self.head.next
+                while pos != 1:
+                    pos -= 1
+                    prev = prev.next
+                    curr = curr.next
+                prev.next = curr.next
+                curr = None
+            self.length -= 1
+        return
+
     def display(self):
-        if self.head == None:
+        if self.empty():
             print "List is empty"
         else:
             ptr = self.head
@@ -78,3 +101,46 @@ class LinkedList(object):
                 ptr = ptr.next
             print ""
         return
+
+    def reverse(self):
+        if self.empty():
+            print "List is empty"
+        elif self.length == 1:
+            return
+        else:
+            prev = self.head
+            curr = self.head.next
+            prev.next = None
+            while curr != None:
+                temp = curr.next
+                curr.next = prev
+                prev = curr
+                curr = temp
+            self.head = prev
+        return
+
+    def is_palindrome(self):
+        if self.empty():
+            print "List is empty"
+            return
+        elif self.length == 1:
+            return True
+        else:
+            left_total = 0
+            right_total = 0
+            i = 0
+            inc = 0
+            ptr = self.head
+            while ptr != None:
+                if self.length % 2 == 1 and inc == (self.length / 2):
+                    inc += 1
+                else:
+                    if inc < (self.length / 2):
+                        i += 1
+                        left_total += (i * ptr.data)
+                    else:
+                        right_total += (i * ptr.data)
+                        i -= 1
+                inc += 1
+                ptr = ptr.next
+            return left_total == right_total
