@@ -33,23 +33,14 @@ class BST(object):
     def __init__(self):
         self.root = None
 
-    def insert(self, val):
-        if self.root == None:
-            self.root = Node(val)
+    def insert(self, val, node):
+        if node is None:
+            return Node(val)
+        if val < node.data:
+            node.left = self.insert(val, node.left)
         else:
-            self.__insert(val, self.root)
-
-    def __insert(self, val, current):
-        if val <= current.data:
-            if current.hasLeftChild():
-                self.__insert(val, current.left)
-            else:
-                current.left = Node(val, parent=current)
-        else:
-            if current.hasRightChild():
-                self.__insert(val, current.right)
-            else:
-                current.right = Node(val, parent=current)
+            node.right = self.insert(val, node.right)
+        return node
 
     def delete(self, val, root=None):
         if root is None:
@@ -113,16 +104,3 @@ class BST(object):
             self.postorder(current.left)
             self.postorder(current.right)
             print current.data,
-
-b = BST()
-b.insert(5)
-b.insert(3)
-b.insert(7)
-b.insert(1)
-b.insert(4)
-b.insert(6)
-b.insert(8)
-b.postorder(b.root)
-b.delete(3, b.root)
-print ""
-b.postorder(b.root)
