@@ -34,6 +34,8 @@ class Hash(object):
             if ptr.data[0] == key:
                 ptr.data[1] = val
                 return True
+            else:
+                ptr = ptr.next
         return False
 
 
@@ -56,6 +58,7 @@ class Hash(object):
         while ptr != None:
             if ptr.data[0] == key:
                 return ptr.data[1]
+            ptr = ptr.next
         return None
 
     def __setitem__(self, key, val):
@@ -76,3 +79,5 @@ h['a'] = 1
 print h['a']
 h['a'] = 69
 print h['a']
+h['test'] = 80085
+print h['test']
