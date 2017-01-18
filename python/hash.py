@@ -23,7 +23,9 @@ class Hash(object):
         return True
 
     def __hash(self, str):
-        total = ord(str[0])
+        total = 0
+        if len(str) != 1:
+            total = ord(str[0])
         for c in str:
             total -= ord(c)
             return total % self.size
@@ -42,6 +44,7 @@ class Hash(object):
     def __check_longest_list(self, bucket):
         if self.store[bucket].length > self.longest:
             self.longest = self.store[bucket].length
+        # self.need_to_resize()
         return
 
     def __bad_types(self, key, val):
@@ -69,15 +72,23 @@ class Hash(object):
             return False
 
     def need_to_resize(self):
+        if self.longest >= self.size:
+            self.resize()
         return
 
     def resize(self):
+        self.size *= 2
+        new_store = []
+        for l in self.store:
+            if l != None:
+                ptr = l.head
+                while ptr != None:
+                    new_store.append(ptr.data)
+                    ptr = ptr.next
+        self.store = []
+        for i in new_store:
+            self.insert(i[0], i[1])
         return
 
-h = Hash()
-h['a'] = 1
-print h['a']
-h['a'] = 69
-print h['a']
-h['test'] = 80085
-print h['test']
+    def hash(self, key):
+        return self.__hash(key)
