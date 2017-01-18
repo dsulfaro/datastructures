@@ -104,3 +104,15 @@ class BST(object):
             self.postorder(current.left)
             self.postorder(current.right)
             print current.data,
+
+b = BST()
+b.root = b.insert(1, b.root)
+b.insert(2, b.root)
+b.insert(3, b.root)
+b.insert(4, b.root)
+b.insert(5, b.root)
+b.insert(6, b.root)
+b.insert(7, b.root)
+b.insert(8, b.root)
+b.insert(9, b.root)
+b.inorder(b.root)

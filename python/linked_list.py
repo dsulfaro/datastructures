@@ -91,6 +91,15 @@ class LinkedList(object):
             self.length -= 1
         return
 
+    def include(self, val):
+        ptr = self.head
+        while ptr != None:
+            if ptr.data == val:
+                return True
+            else:
+                ptr = ptr.next
+        return False
+
     def display(self):
         if self.empty():
             print "List is empty"
