@@ -3,8 +3,8 @@ from linked_list import LinkedList
 class Hash(object):
 
     def __init__(self):
-        self.store = [None] * 8
-        self.size = 8
+        self.store = [None] * 4
+        self.size = 4
         self.longest = 0
 
 
@@ -12,6 +12,7 @@ class Hash(object):
         if self.__bad_types(key, val):
             return False
         bucket = self.__hash(key)
+        print key, val, bucket
         if self.store[bucket] == None:
             self.store[bucket] = LinkedList()
             self.store[bucket].push([key, val])
@@ -44,7 +45,7 @@ class Hash(object):
     def __check_longest_list(self, bucket):
         if self.store[bucket].length > self.longest:
             self.longest = self.store[bucket].length
-        # self.need_to_resize()
+        self.need_to_resize()
         return
 
     def __bad_types(self, key, val):
@@ -78,16 +79,14 @@ class Hash(object):
 
     def resize(self):
         self.size *= 2
-        new_store = []
-        for l in self.store:
+        temp = self.store
+        self.store = [None] * self.size
+        for l in temp:
             if l != None:
                 ptr = l.head
                 while ptr != None:
-                    new_store.append(ptr.data)
+                    self.insert(ptr.data[0], ptr.data[1])
                     ptr = ptr.next
-        self.store = []
-        for i in new_store:
-            self.insert(i[0], i[1])
         return
 
     def hash(self, key):
