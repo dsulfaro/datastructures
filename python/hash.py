@@ -45,7 +45,7 @@ class Hash(object):
     def __check_longest_list(self, bucket):
         if self.store[bucket].length > self.longest:
             self.longest = self.store[bucket].length
-        self.need_to_resize()
+        self.__need_to_resize()
         return
 
     def __bad_types(self, key, val):
@@ -72,12 +72,12 @@ class Hash(object):
         else:
             return False
 
-    def need_to_resize(self):
+    def __need_to_resize(self):
         if self.longest >= self.size:
-            self.resize()
+            self.__resize()
         return
 
-    def resize(self):
+    def __resize(self):
         self.size *= 2
         temp = self.store
         self.store = [None] * self.size
