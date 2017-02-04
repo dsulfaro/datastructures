@@ -23,6 +23,10 @@ class BST
     return a.size > 0 ? __inorder_array(@root, []) : __inorder_print(@root)
   end
 
+  def level_order(*a)
+    return a.size > 0 ? __level_order_array(@root, []) : __level_order_print(@root)
+  end
+
   alias_method :add, :insert
   alias_method :push, :insert
   alias_method :<<, :insert
@@ -105,10 +109,31 @@ class BST
     __inorder_array(node.right, result)
   end
 
+  def __level_order_array(node, result)
+    queue = [node]
+    until queue.empty?
+      curr = queue.pop
+      result << curr.val
+      queue << curr.right unless curr.right.nil?
+      queue << curr.left unless curr.left.nil?
+    end
+    result
+  end
+
+  def __level_order_print(node)
+    queue = [node]
+    until queue.empty?
+      curr = queue.pop
+      p curr.val
+      queue << curr.right unless curr.right.nil?
+      queue << curr.left unless curr.left.nil?
+    end
+  end
+
 end
 
 b = BST.new
 b << 5
 b << 3
 b << 6
-p b.kth_largest(1)
+p b.level_order
