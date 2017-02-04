@@ -28,7 +28,23 @@ class BST
   alias_method :<<, :insert
 
   def delete(val)
+    if val == @root.val
+      if @root.right.nil?
+        @root = @root.left
+      elsif @root.left.nil?
+        @root = @root.right
+      else
+        temp = __inorder_successor(@root.right)
+        @root.val = temp.val
+        __delete(@root.val, @root.right)
+      end
+    else
+      __delete(val, @root)
+    end
+  end
 
+  def kth_largest(k)
+    __inorder_array(@root, [])[-k]
   end
 
   private
@@ -44,7 +60,27 @@ class BST
   end
 
   def __delete(val, node)
-
+    return node if node.nil?
+    if val < node.val
+      node.left = __delete(val, node.left)
+    elsif val > node.val
+      node.right = __delete(val, node.right)
+    else
+      if node.right.nil?
+        temp = node.left
+        node = nil
+        return temp
+      elsif node.left.nil?
+        temp = node.right
+        node = nil
+        return temp
+      else
+        temp = __inorder_successor(node.right)
+        node.val = temp.val
+        node.right = __delete(node.val, node.right)
+      end
+    end
+    return node
   end
 
   def __inorder_successor(node)
@@ -74,8 +110,5 @@ end
 b = BST.new
 b << 5
 b << 3
-b << 7
-b << 1
-b << 2
 b << 6
-b << 8
+p b.kth_largest(1)
