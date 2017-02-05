@@ -43,11 +43,13 @@ class LinkedList
     if empty?
       @head = Node.new(key, val)
       @tail = @head
+      @head
     else
       new_node = Node.new(key, val)
       new_node.prev = @tail
       @tail.next = new_node
       @tail = new_node
+      new_node
     end
   end
 
@@ -62,6 +64,13 @@ class LinkedList
     else
       each { |l| l.remove if l.key == key }
     end
+  end
+
+  def shift
+    v = @head
+    @head = @head.next
+    @tail = nil if @head.nil?
+    v
   end
 
   def each
