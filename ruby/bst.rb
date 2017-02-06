@@ -48,10 +48,38 @@ class BST
   end
 
   def kth_largest(k)
-    __inorder_array(@root, [])[-k]
+    result = []
+    kth(@root, result, [k])
+    result.first
+  end
+
+  def all_paths
+    result = []
+    find_paths(@root, [], result)
+    result
   end
 
   private
+
+  def find_paths(node, path, result)
+    return if node.nil?
+    path << node.val
+    if node.left.nil? && node.right.nil?
+      result << path
+    else
+      find_paths(node.left, path.dup, result)
+      find_paths(node.right, path.dup, result)
+    end
+  end
+
+  def kth(node, result, k)
+    return if node.nil?
+    kth(node.right, result, k)
+    k[0] -= 1
+    result << node.val if k.first == 0
+    kth(node.left, result, k)
+  end
+
 
   def __insert(val, node)
     return Node.new(val) if node.nil?
@@ -135,5 +163,9 @@ end
 b = BST.new
 b << 5
 b << 3
+b << 4
+b << 2
+b << 7
 b << 6
-p b.level_order
+b << 8
+p b.kth_largest(3)
