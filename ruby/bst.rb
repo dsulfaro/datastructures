@@ -59,6 +59,11 @@ class BST
     result
   end
 
+  def max_height(node)
+    return 0 if node.nil?
+    return [1 + max_height(node.left), 1 + max_height(node.right)].max
+  end
+
   private
 
   def find_paths(node, path, result)
@@ -76,10 +81,11 @@ class BST
     return if node.nil?
     kth(node.right, result, k)
     k[0] -= 1
-    result << node.val if k.first == 0
+    if k[0] == 0
+      result << node.val
+    end
     kth(node.left, result, k)
   end
-
 
   def __insert(val, node)
     return Node.new(val) if node.nil?
@@ -161,11 +167,9 @@ class BST
 end
 
 b = BST.new
-b << 5
+b << 1
+b << 2
 b << 3
 b << 4
-b << 2
-b << 7
-b << 6
-b << 8
-p b.kth_largest(3)
+b << 5
+p b.max_height(b.root)

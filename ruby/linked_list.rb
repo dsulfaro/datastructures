@@ -9,7 +9,7 @@ class Node
   end
 
   def remove
-    @next.prev = @prev if @prev
+    @next.prev = @prev
     @prev.next = @next
     @next = nil
     @prev = nil
@@ -26,43 +26,39 @@ class LinkedList
     @tail = nil
   end
 
-  def first
-    @head
-  end
-
   def add(val)
     new_node = Node.new(val)
     if @head.nil?
       @head = new_node
-      @tail = @head
+      @tail = new_node
     else
-      new_node.prev = @tail
       @tail.next = new_node
+      new_node.prev = @tail
       @tail = new_node
     end
     new_node
   end
 
+  def first
+    @head
+  end
+
   def remove(val)
-    if @head.val == val
-      victim = @head
+    if val == @head.val
       @head = @head.next
       @tail = nil if @head.nil?
-      victim
-    elsif @tail.val == val
-      victim = @tail
+    elsif val == @tail.val
       @tail = @tail.prev
-      @tail.next = nil
       @head = nil if @tail.nil?
-      victim
+      @tail.next = nil
     else
       each do |link|
         if link.val == val
           link.remove
-          return link
         end
       end
     end
+    val
   end
 
   def each
@@ -82,10 +78,3 @@ class LinkedList
 end
 
 l = LinkedList.new
-l.add(1)
-l.add(2)
-l.add(3)
-l.remove(3)
-l.remove(2)
-l.remove(1)
-l.show
