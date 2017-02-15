@@ -75,6 +75,22 @@ class LinkedList
     end
   end
 
+  def middle
+    x = @head
+    y = @head
+    while y != nil && y.next != nil
+      x = x.next
+      y = y.next.next
+    end
+    x.val
+  end
+
 end
 
 l = LinkedList.new
+l.add(1)
+l.add(2)
+l.add(3)
+l.add(4)
+l.add(5)
+p l.middle

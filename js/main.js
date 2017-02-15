@@ -31,6 +31,7 @@ class LinkedList {
     if (e.keyCode === 13 && e.currentTarget.value != "") {
       console.log(e.currentTarget.value)
       this.add(e.currentTarget.value)
+      document.getElementById("ll-add").value = ""
       this.render()
     }
   }
