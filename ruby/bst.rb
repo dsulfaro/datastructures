@@ -64,7 +64,23 @@ class BST
     return [1 + max_height(node.left), 1 + max_height(node.right)].max
   end
 
+  def kth_leaf(k)
+    result = []
+    __leaves(@root, result, [k])
+    result.first
+  end
+
   private
+
+  def __leaves(node, result, k)
+    return if node.nil?
+    __leaves(node.left, result, k)
+    if node.left.nil? && node.right.nil?
+      k[0] -= 1
+      result << node if k[0] == 0
+    end
+    __leaves(node.right, result, k)
+  end
 
   def find_paths(node, path, result)
     return if node.nil?
@@ -167,9 +183,12 @@ class BST
 end
 
 b = BST.new
-b << 1
-b << 2
+b << 7
+b << 5
+b << 9
 b << 3
 b << 4
-b << 5
-p b.max_height(b.root)
+b << 10
+b << 8
+
+p b.kth_leaf(1)
