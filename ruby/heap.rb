@@ -6,6 +6,23 @@ class MinHeap
     @store = [nil]
   end
 
+  def add(val)
+    @store << val
+    self.class.heapify_up(@store, @store.length - 1)
+  end
+
+  alias_method :<<, :add
+  alias_method :push :add
+
+  def peek
+    @store[1]
+  end
+
+  def print
+    p @store
+    puts ""
+  end
+
   private
 
   def self.children(parent_idx, arr)
@@ -40,10 +57,20 @@ class MinHeap
   def self.heapify_up(arr, child)
     parent = MinHeap.parent(child, arr)
     return if parent.empty?
+    if arr[parent.first] > arr[child]
+      arr[parent.first], arr[child] = arr[child], arr[parent.first]
+      MinHeap.heapify_up(arr, parent.first)
+    else
+      return
+    end
   end
 end
 
 b = MinHeap.new
-arr = [0, 10, 3, 6, 4, 5]
-MinHeap.heapify_down(arr, 1)
-p arr
+b << 5
+b << 6
+b << 7
+b << 8
+b << 9
+b << 1
+b.print
