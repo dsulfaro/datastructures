@@ -4,6 +4,16 @@ class MinHeap
     @store = [nil]
   end
 
+  def self.sort!(arr)
+    heap = MinHeap.new
+    arr.each {|x| heap << x}
+    result = []
+    until result.length == arr.length
+      result << heap.remove
+    end
+    result
+  end
+
   def add(val)
     @store << val
     self.class.heapify_up(@store, @store.length - 1)
@@ -59,10 +69,11 @@ class MinHeap
   def self.heapify_down(arr, par)
     children = MinHeap.children(par, arr)
     return if children.empty?
-    if arr[par] > children[0] && arr[children[0]] < arr[children[1]]
+    return arr if children.all? { |c| arr[c] > arr[par] }
+    if arr[par] > children[0] && (children[1] != nil && arr[children[0]] < arr[children[1]])
       arr[par], arr[children[0]] = arr[children[0]], arr[par]
       MinHeap.heapify_down(arr, children[0])
-    elsif arr[par] > children[1]
+    elsif children[1] != nil && arr[par] > children[1]
       arr[par], arr[children[1]] = arr[children[1]], arr[par]
       MinHeap.heapify_down(arr, children[1])
     else
@@ -83,11 +94,5 @@ class MinHeap
 end
 
 b = MinHeap.new
-b << 5
-b << 6
-b << 7
-b << 8
-b << 9
-b << 1
-b.extract
-b.print
+arr = [4,2,6,1,9,8,3,5]
+p MinHeap.sort!(arr)
