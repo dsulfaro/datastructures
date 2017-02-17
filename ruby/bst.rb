@@ -70,6 +70,33 @@ class BST
     result.first
   end
 
+  def lca(node, a, b)
+    return if node.nil?
+    return node if node.val >= a && node.val <= b
+    if node.val > b
+      return lca(node.left, a, b)
+    else
+      return lca(node.right, a, b)
+    end
+  end
+
+  def max_between(node, a, b)
+    anc = lca(@root, a, b)
+    [max_in_path(anc, a), max_in_path(anc, b)].max
+  end
+
+  def max_in_path(node, leaf)
+    max = node.val
+    queue = [node]
+    until queue.empty?
+      curr = queue.pop
+      max = curr.val if curr.val > max
+      queue << curr.left if curr.left && (curr.left.val <= node.val && curr.left.val >= leaf)
+      queue << curr.right if curr.right && (curr.right.val >= node.val && curr.left.val <= leaf)
+    end
+    max
+  end
+
   private
 
   def __leaves(node, result, k)
@@ -183,12 +210,15 @@ class BST
 end
 
 b = BST.new
-b << 7
-b << 5
-b << 9
-b << 3
-b << 4
+b << 40
+b << 20
+b << 30
 b << 10
-b << 8
+b << 5
+b << 7
+b << 6
+b << 25
+b << 21
+b << 27
 
-p b.kth_leaf(1)
+p b.max_between(b.root, 6, 21)
