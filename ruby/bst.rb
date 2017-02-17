@@ -97,7 +97,46 @@ class BST
     max
   end
 
+  def sum_k_smallest1(k)
+    nodes = []
+    __inorder_array(@root, nodes)
+    nodes.take(k).reduce(:+)
+  end
+
+  def k_nodes(k, which)
+    result = []
+    if which == "smallest"
+      __k_smallest(@root, result, [k])
+    elsif which == "largest"
+      __k_largest(@root, result, [k])
+    else
+      puts "'smallest' OR 'largest' ONLY"
+      return nil
+    end
+    result
+  end
+
   private
+
+  def __k_smallest(node, result, k)
+    return if node.nil?
+    __k_smallest(node.left, result, k)
+    if k[0] > 0
+      result << node.val
+      k[0] -= 1
+    end
+    __k_smallest(node.right, result, k)
+  end
+
+  def __k_largest(node, result, k)
+    return if node.nil?
+    __k_largest(node.right, result, k)
+    if k[0] > 0
+      result << node.val
+      k[0] -= 1
+    end
+    __k_largest(node.left, result, k)
+  end
 
   def __leaves(node, result, k)
     return if node.nil?
@@ -221,4 +260,4 @@ b << 25
 b << 21
 b << 27
 
-p b.max_between(b.root, 6, 21)
+p b.k_nodes(3, "largest")
