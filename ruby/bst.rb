@@ -247,17 +247,3 @@ class BST
   end
 
 end
-
-b = BST.new
-b << 40
-b << 20
-b << 30
-b << 10
-b << 5
-b << 7
-b << 6
-b << 25
-b << 21
-b << 27
-
-p b.k_nodes(3, "largest")
