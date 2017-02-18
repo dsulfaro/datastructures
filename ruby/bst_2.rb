@@ -50,14 +50,26 @@ class BST
 
 end
 
+def two_sum(a, b, target)
+  avals = a.inorder(1)
+  differences = []
+  avals.each { |x| differences << target - x }
+  queue = [b.root]
+  until queue.empty?
+    curr = queue.pop
+    return true if differences.include?(curr.val)
+    queue << curr.left if curr.left
+    queue << curr.right if curr.right
+  end
+  false
+end
+
 b = BST.new
-b << 9
-b << 4
-b << 17
+b << 1
+b << 2
 b << 3
-b << 6
-b << 22
-b << 5
-b << 7
-b << 20
-p b.closest(12)
+
+c = BST.new
+c << 4
+c << 10
+c << 20
