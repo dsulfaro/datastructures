@@ -48,6 +48,21 @@ class BST
     result
   end
 
+  def seq(s)
+    i = [0]
+    seq_util(@root, s, i)
+    i.first == s.length
+  end
+
+  def seq_util(curr, s, i)
+    return if curr.nil?
+    seq_util(curr.left, s, i)
+    if s[i.first] == curr.val
+      i[0] += 1
+    end
+    seq_util(curr.right, s, i)
+  end
+
 end
 
 def two_sum(a, b, target)
@@ -69,7 +84,5 @@ b << 1
 b << 2
 b << 3
 
-c = BST.new
-c << 4
-c << 10
-c << 20
+a = [1,2,3]
+p b.seq(a)
