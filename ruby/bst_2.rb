@@ -79,10 +79,28 @@ def two_sum(a, b, target)
   false
 end
 
-b = BST.new
-b << 1
-b << 2
-b << 3
+def construct_bsts(start, finish)
+  result = []
+  if start > finish
+    result << nil
+    return result
+  end
 
-a = [1,2,3]
-p b.seq(a)
+  (start..finish).each do |x|
+    left = construct_bsts(start, x - 1)
+    right = construct_bsts(x + 1, finish)
+    (0...left.length).each do |y|
+      l = left[y]
+      (0...right.length).each do |z|
+        r = right[z]
+        n = Node.new(x)
+        n.left = l
+        n.right = r
+        result << n
+      end
+    end
+  end
+  result
+end
+
+p construct_bsts(1, 3)
