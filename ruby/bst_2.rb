@@ -32,12 +32,32 @@ class BST
     result
   end
 
+  def closest(x)
+    queue = [@root]
+    abs = (@root.val - x).abs
+    result = @root.val
+    until queue.empty?
+      curr = queue.pop
+      if (curr.val - x).abs < abs
+        result = curr.val
+        abs = (curr.val - x).abs
+      end
+      queue << curr.left if curr.val > x && curr.left
+      queue << curr.right if curr.val < x && curr.right
+    end
+    result
+  end
+
 end
 
 b = BST.new
-b << 8
+b << 9
+b << 4
+b << 17
+b << 3
+b << 6
+b << 22
+b << 5
 b << 7
-b << 10
-b << 2
-b << 13
-p b.dead_end
+b << 20
+p b.closest(12)
