@@ -63,7 +63,30 @@ class BST
     seq_util(curr.right, s, i)
   end
 
-end
+  def all_trees
+    queue = [@root]
+    trees = []
+    until queue.empty?
+      curr = queue.pop
+      tree = []
+      __inorder_array(curr, tree)
+      trees << tree
+      queue << curr.left if curr.left
+      queue << curr.right if curr.right
+    end
+    trees
+  end
+
+  def trees_in_range(r)
+    trees = all_trees
+    total = 0
+    trees.each do |tree|
+      total += 1 if tree.all? { |x| x.between?(r[0], r[1]) }
+    end
+    total
+  end
+
+end ############################################################################
 
 def two_sum(a, b, target)
   avals = a.inorder(1)
@@ -103,4 +126,11 @@ def construct_bsts(start, finish)
   result
 end
 
-p construct_bsts(1, 3)
+b = BST.new
+b << 10
+b << 5
+b << 50
+b << 1
+b << 40
+b << 100
+p b.trees_in_range([1, 45])
